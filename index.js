@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 
 const URI = process.env.MONGO_URI;
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT;
 
 const client = new MongoClient(URI, {
   serverApi: {
@@ -25,6 +25,11 @@ const run = async () => {
 
     app.get("/all-doctors", async (req, res) => {
       const result = await collection.find().toArray();
+      res.send(result);
+    });
+
+    app.get("/doctors/:id", async (req, res) => {
+      const result = await collection.findOne({ id: req.params.id });
       res.send(result);
     });
   } finally {
