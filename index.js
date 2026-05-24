@@ -54,6 +54,7 @@ const run = async () => {
       const query = {
         _id: new ObjectId(id),
       };
+
       const newData = {
         $set: {
           name: data.name,
@@ -62,6 +63,7 @@ const run = async () => {
           reason: data.reason,
         },
       };
+
       const result = appointmentsCollection.updateOne(query, newData);
       res.send(result);
     });
