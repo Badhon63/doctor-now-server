@@ -4,6 +4,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 dotenv.config();
 const app = express();
+
 app.use(express.json());
 
 const URI = process.env.MONGO_URI;
