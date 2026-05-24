@@ -23,6 +23,7 @@ const run = async () => {
     const db = client.db("doctorNow");
     const collection = db.collection("doctorList");
     const appointmentsCollection = db.collection("appointments");
+    const users = db.collection("user");
 
     app.get("/all-doctors", async (req, res) => {
       const result = await collection.find().toArray();
@@ -70,6 +71,23 @@ const run = async () => {
         _id: new ObjectId(id),
       };
       const result = await appointmentsCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    app.patch("/user/:id", async (req, res) => {
+      const data = req.body;
+      const id = req.params.id;
+      console.log(data, id);
+      const query = {
+        _id: new ObjectId(id),
+      };
+      const newData = {
+        $set: {
+          name: data.name,
+          image: data.image,
+        },
+      };
+      const result = users.updateOne(query, newData);
       res.send(result);
     });
   } finally {
