@@ -22,6 +22,7 @@ const run = async () => {
     await client.connect();
     const db = client.db("doctorNow");
     const collection = db.collection("doctorList");
+    const appointmentsCollection = db.collection("appointments");
 
     app.get("/all-doctors", async (req, res) => {
       const result = await collection.find().toArray();
@@ -30,6 +31,12 @@ const run = async () => {
 
     app.get("/doctors/:id", async (req, res) => {
       const result = await collection.findOne({ id: req.params.id });
+      res.send(result);
+    });
+
+    app.post("/appointments", async (req, res) => {
+      const data = req.body;
+      result = await appointmentsCollection.insertOne(data);
       res.send(result);
     });
   } finally {
