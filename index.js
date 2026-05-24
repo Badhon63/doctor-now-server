@@ -36,7 +36,32 @@ const run = async () => {
 
     app.post("/appointments", async (req, res) => {
       const data = req.body;
-      result = await appointmentsCollection.insertOne(data);
+      const result = await appointmentsCollection.insertOne(data);
+      res.send(result);
+    });
+
+    app.get("/appointments/:id", async (req, res) => {
+      const id = req.params.id;
+      const result = await appointmentsCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.patch("/appointments/:id", async (req, res) => {
+      const data = req.body;
+      const id = req.params.id;
+      console.log("id:", id, "data:", data);
+      const query = {
+        _id: new ObjectId(id),
+      };
+      const newData = {
+        $set: {
+          name: data.name,
+          date: data.date,
+          time: data.time,
+          reason: data.reason,
+        },
+      };
+      const result = appointmentsCollection.updateOne(query, newData);
       res.send(result);
     });
   } finally {
