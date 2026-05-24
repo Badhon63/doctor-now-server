@@ -49,7 +49,6 @@ const run = async () => {
     app.patch("/appointments/:id", async (req, res) => {
       const data = req.body;
       const id = req.params.id;
-      console.log("id:", id, "data:", data);
       const query = {
         _id: new ObjectId(id),
       };
@@ -62,6 +61,15 @@ const run = async () => {
         },
       };
       const result = appointmentsCollection.updateOne(query, newData);
+      res.send(result);
+    });
+
+    app.delete("/appointments/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = {
+        _id: new ObjectId(id),
+      };
+      const result = await appointmentsCollection.deleteOne(query);
       res.send(result);
     });
   } finally {
