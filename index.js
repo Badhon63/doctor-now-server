@@ -64,7 +64,7 @@ const run = async () => {
         },
       };
 
-      const result = appointmentsCollection.updateOne(query, newData);
+      const result = await appointmentsCollection.updateOne(query, newData);
       res.send(result);
     });
 
