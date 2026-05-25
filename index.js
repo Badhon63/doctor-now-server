@@ -90,7 +90,7 @@ const run = async () => {
           image: data.image,
         },
       };
-      const result = users.updateOne(query, newData);
+      const result = await users.updateOne(query, newData);
       res.send(result);
     });
   } finally {
