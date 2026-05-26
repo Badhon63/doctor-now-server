@@ -43,8 +43,10 @@ const run = async () => {
     });
 
     app.get("/appointments/:id", async (req, res) => {
-      const id = req.params.id;
-      const result = await appointmentsCollection.find().toArray();
+      const userId = req.params.id;
+      const result = await appointmentsCollection
+        .find({ userId: userId })
+        .toArray();
       res.send(result);
     });
 
